@@ -1,0 +1,21 @@
+[workspace]
+members = ["crates/*"]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+rust-version = "1.81"
+
+[workspace.dependencies]
+clang-binding = { path = "crates/clang-binding" }
+foro-clang-format = { path = "crates/foro-clang-format" }
+
+anyhow = "1.0.92"
+
+[profile.super-release]
+inherits = "release"
+opt-level = 3
+codegen-units = 1
+debug = false
+lto = "fat"
+panic = "abort"

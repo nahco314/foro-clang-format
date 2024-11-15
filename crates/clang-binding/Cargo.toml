@@ -1,0 +1,12 @@
+[package]
+name = "clang-binding"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = { workspace = true }
+ignore = "0.4.23"
+
+[build-dependencies]
+bindgen = "0.69"
+regex = "1.11.1"
