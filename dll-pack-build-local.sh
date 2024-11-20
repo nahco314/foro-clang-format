@@ -5,7 +5,7 @@ cd ./crates/clang-binding/llvm-project
 mkdir ./build
 mkdir ./build/install
 mkdir ./build/install/lib
-cmake -S llvm -B build -G Ninja \
+cmake -S llvm -B build \
     -DCMAKE_INSTALL_PREFIX="./build/install" \
     -DLLVM_TARGETS_TO_BUILD= \
     -DCMAKE_BUILD_TYPE=Release \
@@ -14,7 +14,7 @@ cmake -S llvm -B build -G Ninja \
     -DLLVM_INCLUDE_EXAMPLES=0 \
     -DLLVM_INCLUDE_BENCHMARKS=0 \
     -DLLVM_ENABLE_BINDINGS=0
-78
+
 cmake --build build --target clang-format
 cmake --build build --target install
 
