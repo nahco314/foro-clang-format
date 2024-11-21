@@ -24,6 +24,8 @@ jobs:
       #        run: |
       #          git config --global core.longpaths true
       - uses: actions/checkout@master
+        with:
+          submodules: 'recursive'
       - uses: Swatinem/rust-cache@v2.7.3
       - name: Install dll-pack-builder
         run: pip install git+https://github.com/nahco314/dll-pack-builder
