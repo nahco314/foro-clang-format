@@ -16,6 +16,10 @@ jobs:
         include:
           - runner: 'ubuntu-20.04'
             target: 'x86_64-unknown-linux-gnu'
+          - runner: 'macos-13'
+            target: 'x86_64-apple-darwin'
+          - runner: 'macos-14'
+            target: 'aarch64-apple-darwin'
     runs-on: ${{ matrix.runner }}
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
