@@ -1,5 +1,5 @@
 mkdir build
 cd build
 
-emcmake cmake -G Ninja ..
+cmake -G Ninja ..
 ninja foro-clang-format
