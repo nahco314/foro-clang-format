@@ -5,8 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_library(foro-clang-format SHARED src/main.cpp src/lib.cpp)
 
-set(CMAKE_MACOSX_RPATH ON)
-
 include(FetchContent)
 
 set(LLVM_ENABLE_PROJECTS clang CACHE STRING "LLVM projects to build")
@@ -53,12 +51,15 @@ set(LLVM_LIBRARIES
         clangFormat
         clangRewrite
         clangToolingCore
-        clangFormat
+        LLVMSupport
+        LLVMCore
+        LLVMOption
+        LLVMMC
 )
 
 target_include_directories(foro-clang-format PRIVATE ${LLVM_INCLUDE_DIRS})
 target_compile_features(foro-clang-format PRIVATE cxx_std_20)
-target_compile_options(foro-clang-format PRIVATE -Ofast)
+target_compile_options(foro-clang-format PRIVATE -O3)
 
 set_target_properties(foro-clang-format PROPERTIES OUTPUT_NAME "foro-clang-format")
 
