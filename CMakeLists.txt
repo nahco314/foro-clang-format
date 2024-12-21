@@ -5,8 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_library(foro-clang-format SHARED src/main.cpp src/lib.cpp)
 
-set(CMAKE_MACOSX_RPATH ON)
-
 include(FetchContent)
 
 set(LLVM_ENABLE_PROJECTS clang CACHE STRING "LLVM projects to build")
@@ -65,8 +63,8 @@ set_target_properties(foro-clang-format PROPERTIES OUTPUT_NAME "foro-clang-forma
 if(APPLE)
     set_target_properties(foro-clang-format PROPERTIES
             BUILD_WITH_INSTALL_RPATH ON
-            BUILD_RPATH "@loader_path"
-            INSTALL_RPATH "@loader_path"
+            BUILD_RPATH ""
+            INSTALL_RPATH ""
     )
 endif()
 
