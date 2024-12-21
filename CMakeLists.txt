@@ -58,9 +58,14 @@ set(LLVM_LIBRARIES
 
 target_include_directories(foro-clang-format PRIVATE ${LLVM_INCLUDE_DIRS})
 target_compile_features(foro-clang-format PRIVATE cxx_std_20)
-target_compile_options(foro-clang-format PRIVATE -Ofast)
+target_compile_options(foro-clang-format PRIVATE -O3)
 
 set_target_properties(foro-clang-format PROPERTIES OUTPUT_NAME "foro-clang-format")
+
+set_target_properties(foro-clang-format PROPERTIES
+        INSTALL_RPATH "@rpath"
+        BUILD_WITH_INSTALL_RPATH ON
+)
 
 target_link_libraries(foro-clang-format PRIVATE
         nlohmann_json::nlohmann_json
