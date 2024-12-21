@@ -62,9 +62,7 @@ set_target_properties(foro-clang-format PROPERTIES OUTPUT_NAME "foro-clang-forma
 
 if(APPLE)
     set_target_properties(foro-clang-format PROPERTIES
-            BUILD_WITH_INSTALL_RPATH ON
-            BUILD_RPATH ""
-            INSTALL_RPATH ""
+            INSTALL_RPATH "@executable_path/../lib"
     )
 endif()
 
