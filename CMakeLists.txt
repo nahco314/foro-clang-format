@@ -62,11 +62,13 @@ target_compile_options(foro-clang-format PRIVATE -O3)
 
 set_target_properties(foro-clang-format PROPERTIES OUTPUT_NAME "foro-clang-format")
 
-set_target_properties(foro-clang-format PROPERTIES
-        BUILD_WITH_INSTALL_RPATH ON
-        BUILD_RPATH "@loader_path"
-        INSTALL_RPATH "@loader_path"f
-)
+if(APPLE)
+    set_target_properties(foro-clang-format PROPERTIES
+            BUILD_WITH_INSTALL_RPATH ON
+            BUILD_RPATH "@loader_path"
+            INSTALL_RPATH "@loader_path"f
+    )
+endif()
 
 target_link_libraries(foro-clang-format PRIVATE
         nlohmann_json::nlohmann_json
