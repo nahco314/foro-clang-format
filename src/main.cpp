@@ -19,12 +19,9 @@ struct FormatResult {
         : status(s), formatted_content(fc), error(err) {}
 };
 
-// 動的メモリをWASM側で扱うための関数
 extern "C" {
 __attribute__((visibility("default"))) uint64_t
 foro_malloc(uint64_t size, uint64_t alignment) {
-    // 簡易的な実装例(実際にはalignmentに対応する必要がある可能性があります)
-    // alignmentは無視している例です
     void *ptr = std::malloc((size_t)size);
     return (uint64_t)ptr;
 }
@@ -88,7 +85,6 @@ extern "C" {
 
 __attribute__((visibility("default"))) uint64_t foro_main(uint64_t ptr,
                                                           uint64_t len) {
-    // ptrをchar*として扱いJSONを読み込む
     const uint8_t *data = (const uint8_t *)ptr;
     std::string input_str((const char *)data, (size_t)len);
 
@@ -96,7 +92,6 @@ __attribute__((visibility("default"))) uint64_t foro_main(uint64_t ptr,
     try {
         v = nlohmann::json::parse(input_str);
     } catch (const std::exception &e) {
-        // JSONパースエラー
         nlohmann::json err_json = {
             {"plugin-panic", std::string("JSON parse error: ") + e.what()}};
         auto b = nlohmann::json::to_cbor(err_json);
@@ -106,9 +101,6 @@ __attribute__((visibility("default"))) uint64_t foro_main(uint64_t ptr,
 
     nlohmann::json result_json = foro_main_with_json(v);
 
-    // 結果をJSONでシリアライズ (例ではCBORやJSON文字列など任意フォーマットでOK)
-    // Rust側は serde_json::to_vec -> JSONのバイナリ表現 (UTF-8文字列)
-    // 同様にUTF-8文字列とする
     std::string result_str = result_json.dump();
     std::vector<uint8_t> result_vec(result_str.begin(), result_str.end());
 
