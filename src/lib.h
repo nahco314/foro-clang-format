@@ -4,8 +4,8 @@
 #include <vector>
 
 struct Result {
-    bool error;
-    std::string content;
+  bool error;
+  std::string content;
 };
 
 auto version() -> std::string;
@@ -22,5 +22,7 @@ auto set_sort_includes(const bool sort) -> void;
 auto dump_config(const std::string style, const std::string FileName,
                  const std::string code) -> Result;
 auto is_ignored(const std::string path) -> bool;
+
+auto defaultFormatStyle() -> std::string;
 
 #endif

@@ -67,7 +67,7 @@ static nlohmann::json foro_main_with_json(const nlohmann::json &input) {
         return nlohmann::json{{"format-status", "ignored"}};
     }
 
-    Result r = ::format(target_content, target, "");
+    Result r = ::format(target_content, target, defaultFormatStyle());
 
     nlohmann::json result;
     if (!r.error) {

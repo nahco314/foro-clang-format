@@ -93,31 +93,8 @@ static auto format_range(const std::unique_ptr<llvm::MemoryBuffer> code,
         AssumedFileName = "<stdin>";
     }
 
-    IntrusiveRefCntPtr<llvm::vfs::InMemoryFileSystem> InMemoryFileSystem(
-        new llvm::vfs::InMemoryFileSystem);
-    FileManager Files(FileSystemOptions(), InMemoryFileSystem);
-
-    IntrusiveRefCntPtr<DiagnosticOptions> DiagOpts(new DiagnosticOptions());
-    DiagnosticsEngine Diagnostics(
-        IntrusiveRefCntPtr<DiagnosticIDs>(new DiagnosticIDs), &*DiagOpts);
-    SourceManager Sources(Diagnostics, Files);
-
-    StringRef _style = style;
-
-    if (!_style.starts_with("{") && !isPredefinedStyle(_style)) {
-        std::unique_ptr<llvm::MemoryBuffer> DotClangFormat =
-            MemoryBuffer::getMemBuffer(style);
-
-        createInMemoryFile(".clang-format", *DotClangFormat.get(), Sources,
-                           Files, InMemoryFileSystem.get());
-        _style = "file:.clang-format";
-    }
-
     llvm::Expected<FormatStyle> FormatStyle =
-        getStyle(_style, AssumedFileName, FallbackStyle, code->getBuffer(),
-                 InMemoryFileSystem.get(), false);
-
-    InMemoryFileSystem.reset();
+        getStyle(style, AssumedFileName, FallbackStyle);
 
     if (!FormatStyle) {
         std::string err = llvm::toString(FormatStyle.takeError());
@@ -422,4 +399,8 @@ auto dump_config(const std::string style, const std::string FileName,
 
 auto is_ignored(const std::string path) -> bool {
     return clang::format::is_ignored(path);
+}
+
+auto defaultFormatStyle() -> std::string {
+    return clang::format::DefaultFormatStyle;
 }
