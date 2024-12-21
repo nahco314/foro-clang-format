@@ -66,7 +66,7 @@ if(APPLE)
     set_target_properties(foro-clang-format PROPERTIES
             BUILD_WITH_INSTALL_RPATH ON
             BUILD_RPATH "@loader_path"
-            INSTALL_RPATH "@loader_path"f
+            INSTALL_RPATH "@loader_path"
     )
 endif()
 
