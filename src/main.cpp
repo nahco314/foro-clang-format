@@ -50,7 +50,13 @@ static uint8_t *to_array_result(const std::vector<uint8_t> &arr) {
 }
 
 static nlohmann::json foro_main_with_json(const nlohmann::json &input) {
-    if (!input.contains("target") || !input["target"].is_string()) {
+    // If compile target is WASM, we should read "wasm-target" instead of
+    // "os-target".
+
+    // But for now, clang-format plugin doesn't support WASM target.
+    // So, we just ignore the "wasm-target" field.
+
+    if (!input.contains("os-target") || !input["os-target"].is_string()) {
         return nlohmann::json{
             {"plugin-panic", "Missing or invalid 'target' field"}};
     }
@@ -60,7 +66,7 @@ static nlohmann::json foro_main_with_json(const nlohmann::json &input) {
             {"plugin-panic", "Missing or invalid 'target-content' field"}};
     }
 
-    std::string target = input["target"].get<std::string>();
+    std::string target = input["os-target"].get<std::string>();
     std::string target_content = input["target-content"].get<std::string>();
 
     if (is_ignored(target)) {
